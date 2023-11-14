@@ -1,0 +1,190 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 50px;
+    }
+
+    form {
+      max-width: 300px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label, input {
+      display: block;
+      margin-bottom: 15px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <form onsubmit="
+    var username = document.getElementById('username').value; 
+    var password = document.getElementById('password').value; 
+    var validUsernames = ['user1', 'user2']; 
+    var validPasswords = ['user@123']; 
+    var usernameError = document.getElementById('username-error');
+    var passwordError = document.getElementById('password-error');
+
+
+    if (validUsernames.includes(username) && validPasswords.includes(password)) {
+      // Redirect to another page
+    //   window.location.href = 'sample.html';
+    alert('Login successful!');
+    } else {
+      // Check for individual errors
+      if (!validUsernames.includes(username)) {
+        usernameError.textContent = 'Invalid username.';
+      }
+
+      if (!validPasswords.includes(password)) {
+        passwordError.textContent = 'Invalid password.';
+      }
+
+      return false;
+    }
+  ">
+    <label for="username" style="text-align: left;">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <div id="username-error" class="error-message" style="text-align: left;"></div>
+
+    <label for="password" style="text-align: left;">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <div id="password-error" class="error-message" style="text-align: left;"></div>
+
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIN Verification</title>
+  <script>
+    // Set the correct PIN
+    const correctPIN = "1234";
+
+    // Maximum number of allowed attempts
+    const maxAttempts = 4;
+
+    // Function to handle form submission
+    function checkPIN() {
+      // Get user input from the form
+      const userInput = document.getElementById("pinInput").value;
+
+      // Loop for a maximum of maxAttempts
+      for (let attempts = 0; attempts < maxAttempts; attempts++) {
+        // Check if the entered PIN is correct
+        if (userInput === correctPIN) {
+          alert("Verification successful! Welcome to your account.");
+          return; // Exit the function on successful verification
+        } else {
+          // Display error message for incorrect PIN
+          const remainingAttempts = maxAttempts - attempts - 1;
+          const message = `Invalid credentials. ${remainingAttempts} attempt remaining.`;
+
+          // Use confirm for error message
+          const acknowledged = confirm(message);
+
+          // Exit the function if maximum attempts reached or user acknowledges the message
+          if (attempts === maxAttempts - 1 || !acknowledged) {
+            alert("Your account has been blocked. Please contact customer support.");
+            return;
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>PIN Verification</h1>
+  <form onsubmit="event.preventDefault(); checkPIN();">
+    <label for="pinInput">Enter your 4-digit PIN:</label>
+    <input type="password" id="pinInput" maxlength="4" pattern="\d{4}" required>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIN Verification</title>
+  <style>
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+  </style>
+  <script>
+  
+    const correctPIN = "1234";
+    const maxAttempts = 4;
+
+    function checkPIN() {
+      const userInput = document.getElementById("pinInput").value;
+      const errorMessageElement = document.getElementById("errorMessage");
+
+      if (userInput === correctPIN) {
+        errorMessageElement.textContent = ""; 
+        alert("Verification successful! Welcome to your account.");
+        return; 
+      }
+
+      let attempts = parseInt(errorMessageElement.dataset.attempts) || 0;
+
+      if (attempts < maxAttempts - 1) {
+        const remainingAttempts = maxAttempts - attempts - 1;
+        errorMessageElement.textContent = `Invalid credentials. ${remainingAttempts} attempt remaining.`;
+        errorMessageElement.dataset.attempts = attempts + 1;
+      } else {
+        errorMessageElement.textContent = "Your account has been blocked. Please contact customer support.";
+        document.getElementById("pinInput").disabled = true;
+        document.querySelector('button[type="submit"]').disabled = true;
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>PIN Verification</h1>
+  <form onsubmit="event.preventDefault(); checkPIN();">
+    <label for="pinInput">Enter your 4-digit PIN:</label>
+    <input type="password" id="pinInput" maxlength="4" pattern="\d{4}" required>
+    <button type="submit">Submit</button>
+    <div id="errorMessage" class="error-message" data-attempts="0"></div>
+  </form>
+</body>
+</html>
